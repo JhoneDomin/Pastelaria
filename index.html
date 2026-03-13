@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pastelaria do Antonio</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#fff5e6;
+margin:0;
+}
+
+header{
+background:#ff7a00;
+color:white;
+text-align:center;
+padding:25px;
+font-size:30px;
+font-weight:bold;
+}
+
+.sub{
+text-align:center;
+margin:10px;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.card{
+background:white;
+border-radius:15px;
+box-shadow:0 5px 12px rgba(0,0,0,0.15);
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.info{
+padding:15px;
+text-align:center;
+}
+
+.preco{
+color:#ff3c00;
+font-size:18px;
+font-weight:bold;
+margin:5px;
+}
+
+button{
+background:#25D366;
+border:none;
+color:white;
+padding:12px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+font-size:16px;
+}
+
+button:hover{
+background:#1ebe5d;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+🥟 Pastelaria do Antonio
+</header>
+
+<p class="sub">Escolha seu pastel e peça no WhatsApp</p>
+
+<div class="container">
+
+<div class="card">
+<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Carne">
+<div class="info">
+<h3>Pastel de Carne</h3>
+<p class="preco">R$ 8,00</p>
+<button onclick="pedir('Pastel de Carne')">Pedir</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Queijo">
+<div class="info">
+<h3>Pastel de Queijo</h3>
+<p class="preco">R$ 7,00</p>
+<button onclick="pedir('Pastel de Queijo')">Pedir</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Frango">
+<div class="info">
+<h3>Pastel de Frango</h3>
+<p class="preco">R$ 8,00</p>
+<button onclick="pedir('Pastel de Frango')">Pedir</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Calabresa">
+<div class="info">
+<h3>Pastel de Calabresa</h3>
+<p class="preco">R$ 8,50</p>
+<button onclick="pedir('Pastel de Calabresa')">Pedir</button>
+</div>
+</div>
+
+</div>
+
+<script>
+
+function pedir(produto){
+
+let numero = "55859991923386"
+
+let mensagem = "Olá, quero pedir um " + produto
+
+let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem)
+
+window.open(url)
+
+}
+
+</script>
+
+</body>
+</html>
