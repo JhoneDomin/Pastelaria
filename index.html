@@ -7,7 +7,7 @@
 <style>
 
 body{
-font-family: Arial;
+font-family:Arial;
 background:#fff5e6;
 margin:0;
 }
@@ -16,64 +16,70 @@ header{
 background:#ff7a00;
 color:white;
 text-align:center;
-padding:25px;
-font-size:30px;
-font-weight:bold;
-}
-
-.sub{
-text-align:center;
-margin:10px;
+padding:20px;
+font-size:28px;
 }
 
 .container{
-display:grid;
-grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
-gap:20px;
 padding:20px;
+max-width:600px;
+margin:auto;
 }
 
-.card{
+.produto{
 background:white;
-border-radius:15px;
-box-shadow:0 5px 12px rgba(0,0,0,0.15);
-overflow:hidden;
-}
-
-.card img{
-width:100%;
-height:160px;
-object-fit:cover;
-}
-
-.info{
 padding:15px;
-text-align:center;
+border-radius:10px;
+margin-bottom:15px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.produto-info{
+flex:1;
+}
+
+.produto-info h3{
+margin:0 0 5px 0;
 }
 
 .preco{
 color:#ff3c00;
-font-size:18px;
 font-weight:bold;
-margin:5px;
+}
+
+input{
+width:60px;
+padding:5px;
 }
 
 button{
 background:#25D366;
-border:none;
 color:white;
-padding:12px;
+border:none;
+padding:15px;
+font-size:18px;
 border-radius:8px;
-cursor:pointer;
 width:100%;
-font-size:16px;
+margin-top:20px;
+cursor:pointer;
 }
 
 button:hover{
 background:#1ebe5d;
 }
 
+.total{
+font-size:20px;
+font-weight:bold;
+margin-top:20px;
+text-align:center;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -82,57 +88,84 @@ background:#1ebe5d;
 🥟 Pastelaria do Antonio
 </header>
 
-<p class="sub">Escolha seu pastel e peça no WhatsApp</p>
-
 <div class="container">
 
-<div class="card">
-<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Carne">
-<div class="info">
+<div class="produto">
+<div class="produto-info">
 <h3>Pastel de Carne</h3>
-<p class="preco">R$ 8,00</p>
-<button onclick="pedir('Pastel de Carne')">Pedir</button>
+<span class="preco">R$ 8,00</span>
 </div>
+<input type="number" min="0" value="0" data-nome="Pastel de Carne" data-preco="8" onchange="calcularTotal()">
 </div>
 
-<div class="card">
-<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Queijo">
-<div class="info">
+<div class="produto">
+<div class="produto-info">
 <h3>Pastel de Queijo</h3>
-<p class="preco">R$ 7,00</p>
-<button onclick="pedir('Pastel de Queijo')">Pedir</button>
+<span class="preco">R$ 7,00</span>
 </div>
+<input type="number" min="0" value="0" data-nome="Pastel de Queijo" data-preco="7" onchange="calcularTotal()">
 </div>
 
-<div class="card">
-<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Frango">
-<div class="info">
+<div class="produto">
+<div class="produto-info">
 <h3>Pastel de Frango</h3>
-<p class="preco">R$ 8,00</p>
-<button onclick="pedir('Pastel de Frango')">Pedir</button>
+<span class="preco">R$ 8,00</span>
 </div>
+<input type="number" min="0" value="0" data-nome="Pastel de Frango" data-preco="8" onchange="calcularTotal()">
 </div>
 
-<div class="card">
-<img src="https://cardapio.mane.com.vc/cardapio/pastel-de-carne-com-queijo/" alt="Pastel de Calabresa">
-<div class="info">
+<div class="produto">
+<div class="produto-info">
 <h3>Pastel de Calabresa</h3>
-<p class="preco">R$ 8,50</p>
-<button onclick="pedir('Pastel de Calabresa')">Pedir</button>
+<span class="preco">R$ 8,50</span>
 </div>
+<input type="number" min="0" value="0" data-nome="Pastel de Calabresa" data-preco="8.5" onchange="calcularTotal()">
 </div>
+
+<div class="total">Total: R$ 0,00</div>
+
+<button onclick="enviarPedido()">Enviar Pedido pelo WhatsApp</button>
 
 </div>
 
 <script>
 
-function pedir(produto){
+function calcularTotal(){
+var inputs = document.querySelectorAll('input[type="number"]')
+var total = 0
+for(var i = 0; i < inputs.length; i++){
+var qtd = parseInt(inputs[i].value) || 0
+var preco = parseFloat(inputs[i].getAttribute('data-preco'))
+total += qtd * preco
+}
+document.querySelector('.total').textContent = 'Total: R$ ' + total.toFixed(2).replace('.', ',')
+}
 
-let numero = "55859991923386"
+function enviarPedido(){
+var inputs = document.querySelectorAll('input[type="number"]')
+var itens = []
+var total = 0
 
-let mensagem = "Olá, quero pedir um " + produto
+for(var i = 0; i < inputs.length; i++){
+var qtd = parseInt(inputs[i].value) || 0
+if(qtd > 0){
+var nome = inputs[i].getAttribute('data-nome')
+var preco = parseFloat(inputs[i].getAttribute('data-preco'))
+itens.push(qtd + 'x ' + nome + ' (R$ ' + (qtd * preco).toFixed(2).replace('.', ',') + ')')
+total += qtd * preco
+}
+}
 
-let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem)
+if(itens.length === 0){
+alert('Selecione pelo menos um item!')
+return
+}
+
+var mensagem = 'Olá, gostaria de fazer um pedido:\n\n' + itens.join('\n') + '\n\nTotal: R$ ' + total.toFixed(2).replace('.', ',')
+
+var numero = "5585991923386"
+
+var url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem)
 
 window.open(url)
 
